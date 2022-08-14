@@ -33,7 +33,7 @@ commands:
             fi
             
 jobs:
-  build-front-end:
+  build-frontend:
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -81,7 +81,7 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: test-front-end
+          name: test-frontend
           working_directory: ./frontend
           command: |
             npm i
@@ -95,7 +95,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: test-back-end
+          name: test-backend
           working_directory: ./backend
           command: |
             npm i
@@ -109,7 +109,7 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: scan-front-end
+          name: scan-frontend
           working_directory: ./frontend
           command: |
             npm i
@@ -298,14 +298,7 @@ cleanup:
 workflows:
   default:
     jobs:
-      - build-front-end
+      - build-frontend
       - build-backend
-      - test-frontend:
-          requires: [build-front-end]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-front-end]
  
+  
