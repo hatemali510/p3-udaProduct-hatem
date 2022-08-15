@@ -140,7 +140,9 @@ jobs:
           name: scan-backend
           working_directory: ./backend
           command: |
-            npm i
+            npm install --save-dev webpack@5.74.0
+            npm update path-parse --depth 3
+            npm update mkdirp --depth 6
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
