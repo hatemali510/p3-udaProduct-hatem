@@ -312,15 +312,17 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+            sudo apt install nodejs
             apk add --update ansible rsync 
             apk add curl
             pip3 install awscli
+            pip3 install 
       - run:
           name: Deploy backend
           command: |
             cd backend
             npm install
-            npm i
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
