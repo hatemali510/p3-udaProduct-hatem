@@ -186,7 +186,7 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text)
-            curl https://kvdb.io/S2wLLpoqSg7SZpN1V65i7Q/backend_url  -d 'http://${backend_url}:3030'
+            curl https://kvdb.io/S2wLLpoqSg7SZpN1V65i7Q/backend_url  -d "http://${backend_url}:3030"
       - persist_to_workspace:
           root: ~/
           paths:
@@ -278,9 +278,8 @@ jobs:
           name: Deploy frontend objects
           command: |
             cd frontend
-            npm i
+            npm install
             npm run build
-            ls -l
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment:
