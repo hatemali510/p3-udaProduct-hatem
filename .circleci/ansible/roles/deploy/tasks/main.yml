@@ -19,7 +19,6 @@
 - name: "install nodejs"
   apt:
     name: nodejs
-    global: yes
     state: present
 
 - name: "Install pm2 gloablly"
