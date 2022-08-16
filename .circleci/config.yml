@@ -75,6 +75,7 @@ jobs:
             ls -al
             cd backend
             ls -al
+            cat .env.sample
             npm i
             npm run build
             ls dist
