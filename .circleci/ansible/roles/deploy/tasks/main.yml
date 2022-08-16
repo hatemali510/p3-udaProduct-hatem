@@ -12,10 +12,9 @@
     autoremove: yes
 
     
-- name: "install nodejs"
+- name: "install npm"
   apt:
     name: npm
-    global: yes
     state: present
 - name: "install nodejs"
   apt:
