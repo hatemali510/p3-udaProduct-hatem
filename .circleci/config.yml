@@ -72,7 +72,9 @@ jobs:
       - run:
           name: Back-end build
           command: |
+            ls
             cd backend
+            ls
             npm i
             npm run build
             ls bakcend
