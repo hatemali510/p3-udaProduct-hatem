@@ -301,10 +301,10 @@ jobs:
             unzip awscliv2.zip
             sudo ./aws/install
       - run:
-          name: Install dependencies
-          command: |
-            sudo apt update
-            sudo apt install openssh-server openssh-client
+            name: Install dependencies
+            command: |
+              sudo apt update
+              sudo apt install openssh-server openssh-client
       - run:
           name: Install Ansible latest
           command: |
@@ -323,7 +323,7 @@ jobs:
           name: Install pm2
           command: |
             sudo apt update
-            sudo npm install pm2 -g  
+            sudo npm install pm2 -g 
       - add_ssh_keys:
           fingerprints: ["31:25:4c:30:d0:8b:57:e5:52:7f:ac:37:64:3f:91:76"]
       - attach_workspace:

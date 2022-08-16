@@ -15,13 +15,6 @@
   apt:
     name: nodejs
     state: present
-    
-- name: "Install PM2"
-  npm:
-    name: pm2
-    global: yes
-    state: present
-    production: yes
 
 - name: "create directory"
   file:
