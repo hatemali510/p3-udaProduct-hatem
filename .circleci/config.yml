@@ -68,16 +68,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys:
+            - build-backend
       - run:
           name: Back-end build
+          working_directory: ./backend
           command: |
-            ls
-            cd backend
             npm i
             npm run build
-            ls
-            ls project/backend/dist
             cp .env dist/.env
             pwd && ls -al
       - persist_to_workspace:
@@ -86,8 +84,9 @@ jobs:
             - project/backend/dist
             - project/backend/node_modules
       - save_cache:
-          paths: [backend/node_modules]
-          key: backend-build
+          key: build-backend
+          paths:
+            - backend/node_modules
 
   test-frontend:
     docker:
@@ -329,8 +328,8 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
-      # - destroy-environment:
-      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   smoke-test:
     docker:
