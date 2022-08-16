@@ -300,6 +300,11 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
+      - run: 
+          name: install openssh 
+          command : 
+            sudo apt-get update  
+            sudo apt-get install openssh-server
       - run:
           name: Install Ansible latest
           command: |
