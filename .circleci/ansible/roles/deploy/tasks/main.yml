@@ -24,7 +24,10 @@
 
   - name: "run server"
     become: true
-    command: pm2 start -f ./main.js
+    command: |
+      apk add --update ansible nodejs npm tar gzip
+      npm i -g pm2
+      pm2 start -f ./main.js
     args:
       chdir: ./udapeople/dist
     environment:
