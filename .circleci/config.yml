@@ -291,7 +291,7 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: cimg/base:stable
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - run:
@@ -305,9 +305,6 @@ jobs:
             command: |
               sudo apt update
               sudo apt install openssh-server openssh-client
-              sudo systemctl status ssh
-              sudo ufw allow ssh
-              sudo ufw status
       - run:
           name: Install Ansible latest
           command: |
