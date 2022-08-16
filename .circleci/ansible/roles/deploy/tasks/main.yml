@@ -13,9 +13,8 @@
 - name: "install npm gloablly"
   become : true
   shell: |
-    sudo apt install npm
-    npm install --save npm-install-global
-    npm -v
+    sudo apt update
+    sudo apt install nodejs npm
     
 
 - name: "install nodejs"
