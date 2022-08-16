@@ -293,7 +293,7 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11
         environment:
-          NODE_ENV: "local"
+          NODE_ENV: "production"
           VERSION: "1"
           ENVIRONMENT: "production"
           TYPEORM_CONNECTION: $TYPEORM_CONNECTION
@@ -302,18 +302,20 @@ jobs:
           TYPEORM_PASSWORD: $TYPEORM_PASSWORD
           TYPEORM_DATABASE: $TYPEORM_DATABASE
           TYPEORM_PORT: $TYPEORM_PORT
-          TYPEORM_ENTITIES: $TYPEORM_ENTITIES
+          TYPEORM_ENTITIES: $TYPEORM_ENTITIES       
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["31:25:4c:30:d0:8b:57:e5:52:7f:ac:37:64:3f:91:76"]
-      - attach_workspace:
-          at: /root
+      - attach_workspace: 
+          at: ~/
+      - restore_cache:
+          keys:
+            - build-backend
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible nodejs npm tar gzip 
-            pip3 install awscli
+            apk add --update ansible nodejs npm tar gzip
       - run:
           name: Deploy backend
           command: |
@@ -322,10 +324,8 @@ jobs:
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
-            cd .circleci/ansible
-            echo "Contents  of the inventory.txt file is -------"
-            cat inventory.txt
-            ansible-playbook --user=ubuntu -i inventory.txt deploy-backend.yml
+            cat ~/project/.circleci/ansible/inventory.txt
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/deploy-backend.yml
       # - destroy-environment:
       #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
