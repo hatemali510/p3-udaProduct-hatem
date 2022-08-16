@@ -76,6 +76,7 @@ jobs:
             cd backend
             npm i
             npm run build
+            ls
             cp .env dist/.env
             pwd && ls -al
       - persist_to_workspace:
