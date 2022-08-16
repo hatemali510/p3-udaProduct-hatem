@@ -305,6 +305,9 @@ jobs:
             command: |
               sudo apt update
               sudo apt install openssh-server openssh-client
+              sudo systemctl status ssh
+              sudo ufw allow ssh
+              sudo ufw status
       - run:
           name: Install Ansible latest
           command: |
@@ -318,6 +321,7 @@ jobs:
           command: |
             curl fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
             sudo apt-get install -y node.js
+            node --version 
       - add_ssh_keys:
           fingerprints: ["31:25:4c:30:d0:8b:57:e5:52:7f:ac:37:64:3f:91:76"]
       - attach_workspace:
@@ -455,8 +459,8 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
