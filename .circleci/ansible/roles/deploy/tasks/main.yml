@@ -25,6 +25,7 @@
   - name: "run server"
     become: true
     command: |
+      cd ./udapeople
       npm install
       pm2 stop default
       pm2 start npm -- start
