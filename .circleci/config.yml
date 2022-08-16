@@ -77,8 +77,7 @@ jobs:
             ls
             npm i
             npm run build
-            ls bakcend
-            ls backend/dist
+            ls dist
       - persist_to_workspace:
           root: ~/
           paths:
