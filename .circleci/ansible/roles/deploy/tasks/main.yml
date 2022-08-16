@@ -10,13 +10,13 @@
 - name: "remove not needed dependences"
   apt:
     autoremove: yes
-- name: "install npm gloablly"
-  become : true
-  shell: |
-    sudo apt update
-    sudo apt install nodejs npm
-    
 
+    
+- name: "install nodejs"
+  apt:
+    name: npm
+    global: yes
+    state: present
 - name: "install nodejs"
   apt:
     name: nodejs
