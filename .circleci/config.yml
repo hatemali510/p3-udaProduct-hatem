@@ -68,25 +68,23 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - build-backend
+          keys: [backend-build]
       - run:
           name: Back-end build
-          working_directory: ./backend
           command: |
+            cd backend
             npm i
             npm run build
-            cp .env dist/.env
-            pwd && ls -al
+            ls bakcend
+            ls backend/dist
       - persist_to_workspace:
           root: ~/
           paths:
             - project/backend/dist
             - project/backend/node_modules
       - save_cache:
-          key: build-backend
-          paths:
-            - backend/node_modules
+          paths: [backend/node_modules]
+          key: backend-build
 
   test-frontend:
     docker:
