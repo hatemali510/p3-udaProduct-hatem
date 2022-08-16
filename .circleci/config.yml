@@ -75,7 +75,8 @@ jobs:
             cd backend
             npm i
             npm run build
-            ls -al
+            cp .env.sample dist/.env
+            pwd && ls -al
       - persist_to_workspace:
           root: ~/
           paths:
