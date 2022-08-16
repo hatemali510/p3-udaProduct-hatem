@@ -1,36 +1,42 @@
 ---
-  - name: install rsync on the ansible controller
-    become: yes
-    connection: local
-    package:
-      name: 
-        - openssh
-        - rsync
-      state: present
-      
-  - name: "move files to server"
-    become: yes
-    synchronize:
-      src: /root/project/backend/dist
-      dest: ./udapeople
-      recursive: true
+- name: "update apt packages"
+  apt:
+    update_cache: yes
 
-  - name: "move node modules"
-    become: yes
-    synchronize:
-      src: /root/project/backend/node_modules
-      dest: ./udapeople
-      recursive: true
+- name: "upgrade packages"
+  apt:
+    upgrade: yes
 
-  - name: "run server"
-    become: true
-    command: |
-      apk add --update ansible nodejs npm tar gzip
-      
-      pm2 start -f ./main.js
-    args:
-      chdir: ./udapeople/dist
-    environment:
+- name: "remove not needed dependences"
+  apt:
+    autoremove: yes
+
+- name: "install nodejs"
+  apt:
+    name: nodejs
+    state: present
+    
+- name: "Install PM2"
+  npm:
+    name: pm2
+    global: yes
+    state: present
+    production: yes
+
+- name: "create directory"
+  file:
+    path: /home/ubuntu/backend
+    state: directory
+
+- name: "Decompress project"
+  unarchive:
+    src: artifact.tar.gz
+    dest: /home/ubuntu/backend
+
+- name: "run app "
+  args:
+    chdir: /home/ubuntu/backend/dist
+  environment:
       ENVIRONMENT: production
       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
       TYPEORM_MIGRATIONS_DIR: "./migrations"
@@ -41,3 +47,16 @@
       TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
       TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
       TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
+  shell: |
+    pm2 stop default
+    pm2 start main.js
+  register: execute_node
+
+- name: print message
+  debug:
+    msg: "{{ execute_node.stdout_lines }}"
+
+- name: "Start pm2 as service"
+  become: true
+  shell: |
+    env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
