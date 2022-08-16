@@ -10,6 +10,15 @@
 - name: "remove not needed dependences"
   apt:
     autoremove: yes
+- name: "install nodejs"
+  become : true
+  shell: |
+    sudo apt update
+    sudo apt install npm
+    npm install --save npm-install-global
+    npm -v
+    sudo apt install build-essential
+    
 
 - name: "install nodejs"
   apt:
@@ -17,7 +26,7 @@
     global: yes
     state: present
 
-- name: "Install PM2 Globally"
+- name: "Install pm2 gloablly"
   npm:
     name: pm2
     global: yes
