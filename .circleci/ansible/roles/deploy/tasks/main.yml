@@ -12,17 +12,22 @@
     autoremove: yes
 
     
-- name: "install npm"
-  apt:
-    name: npm
-    state: present
-
+- name: "install nodejs"
+  become : true
+  shell : |
+    curl fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    sudo apt-get install -y node.js
 
 - name: "Install pm2 gloablly"
   become: true
   shell : | 
-    curl fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-    sudo apt-get install -y node.js
+    npm -v 
+    node -v 
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    command -v nvm
+    nvm use 16.17.0
+    node -v
+    npm -v 
     npm install pm2 -g
 - name: "create directory"
   file:
