@@ -13,10 +13,9 @@
 
     
 - name: "install nodejs"
-  become : true
-  shell : |
-    curl fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-    sudo apt-get install -y node.js
+  apt:
+    name: nodejs
+    state: present
 
 - name: "Install pm2 gloablly"
   become: true
@@ -29,6 +28,7 @@
     node -v
     npm -v 
     npm install pm2 -g
+    
 - name: "create directory"
   file:
     path: /home/ubuntu/backend
