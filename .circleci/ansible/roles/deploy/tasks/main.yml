@@ -12,23 +12,30 @@
     autoremove: yes
 
     
-- name: "install nodejs"
+- name: Install the gpg key for nodejs LTS
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+
+- name: Install the nodejs LTS repos
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_16.17.0.x "xenial" main"
+    state: present
+    update_cache: yes
+
+- name: Install the nodejs
   apt:
     name: nodejs
     state: present
-
-- name: "Install pm2 gloablly"
-  become: true
-  shell : | 
-    npm -v 
-    node -v 
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-    command -v nvm
-    nvm use 16.17.0
-    node -v
-    npm -v 
-    npm install pm2 -g
     
+
+- name: "Install PM2 Globally"
+  npm:
+    name: pm2
+    global: yes
+    state: present
+    production: yes
+
 - name: "create directory"
   file:
     path: /home/ubuntu/backend
