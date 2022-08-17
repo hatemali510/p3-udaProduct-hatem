@@ -361,16 +361,9 @@ jobs:
             apk add --update curl
             pip install awscli
       - run:
-          name: Get backend url
-          command: |
-            ls 
-            pwd
-            export backend_url=$( curl https://kvdb.io/S2wLLpoqSg7SZpN1V65i7Q/backend_url )
-            echo $backend_url
-      - run:
           name: Backend smoke test.
           command: |
-            export API_URL="http://${backend_url}:3030"
+            export API_URL=$( curl https://kvdb.io/S2wLLpoqSg7SZpN1V65i7Q/backend_url )
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
