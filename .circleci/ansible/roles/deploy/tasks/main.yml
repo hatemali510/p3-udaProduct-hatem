@@ -45,10 +45,6 @@
     src: artifact.tar.gz
     dest: /home/ubuntu/backend
     
-- name: "Start pm2 as service"
-  become: true
-  shell: |
-    env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
 
 - name: "run app "
   args:
