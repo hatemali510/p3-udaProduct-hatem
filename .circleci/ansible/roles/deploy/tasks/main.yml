@@ -63,7 +63,5 @@
     TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
     TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
 
-- name: print message
-  debug:
-    msg: "{{ execute_node.stdout_lines }}"
+
 
