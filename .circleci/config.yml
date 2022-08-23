@@ -315,7 +315,12 @@ jobs:
             sudo add-apt-repository --yes --update ppa:ansible/ansible
             sudo apt install ansible
             sudo apt install ansible -y
-      
+      - run:
+          name: Install Node.js 
+          command: |
+            sudo apt update
+            sudo apt install nodejs npm
+            node --version 
       
       - add_ssh_keys:
           fingerprints: ["31:25:4c:30:d0:8b:57:e5:52:7f:ac:37:64:3f:91:76"]
