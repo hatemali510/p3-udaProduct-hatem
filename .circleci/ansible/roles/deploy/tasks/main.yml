@@ -48,10 +48,7 @@
 
 - name: "run server"
   become: true
-  command: |
-    pm2 start -f ./main.js
-    pm2 list 
-    pm2 logs 
+  command: pm2 start -f ./main.js
   args:
     chdir: ./backend/dist
   environment:
