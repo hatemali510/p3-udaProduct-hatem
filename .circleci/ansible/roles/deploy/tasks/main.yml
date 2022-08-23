@@ -77,5 +77,5 @@
   become: true
   shell: |
     cd /home/ubuntu/backend/dist
-    pm2 start main.js
+    pm2 start -f main.js
 
