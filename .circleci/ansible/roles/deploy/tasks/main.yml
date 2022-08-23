@@ -69,7 +69,3 @@
 - name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
-- name: "Start pm2 as service"
-  become: true
-  shell: |
-    env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
