@@ -21,6 +21,7 @@
   apt_repository:
     repo: deb https://deb.nodesource.com/node_13.x bionic main
     update_cache: yes
+
 - name: "Install nodejs"
   apt:
     update_cache: yes
@@ -61,14 +62,13 @@
       TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
       TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
   shell: |
-    pm2 stop default
-    pm2 startup
     pm2 start main.js
   register: execute_node
 
 - name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
+
 - name: "Start pm2 as service"
   become: true
   shell: |
