@@ -25,7 +25,10 @@
     - name: "wait for connection reachability"
       wait_for_connection:
         timeout: 600
-
+    -name : "ech user "
+      shell : |
+        echo "$USER"
+        
     - name: "Install py for Ansible"
       become: true
       raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
