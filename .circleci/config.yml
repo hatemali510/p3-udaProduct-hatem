@@ -77,8 +77,6 @@ jobs:
             npm run build
             cp .env dist/.env
             pwd && ls -al
-      - persist_to_workspace:
-          root: ~/
           paths:
             - project/backend/dist
             - project/backend/node_modules
@@ -269,8 +267,6 @@ jobs:
       - image: sleavely/node-awscli:14.x
     steps:
       - checkout
-      - attach_workspace:
-          at: /root
       - run:
           name: Get backend url
           command: |
@@ -352,7 +348,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /root
+          at: ~/
       - run:
           name: Install dependencies
           command: |
