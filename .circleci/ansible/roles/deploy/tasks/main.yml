@@ -62,6 +62,7 @@
       TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
       TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
   shell: |
+    su ubuntu
     pm2 start main.js
   register: execute_node
 
@@ -72,6 +73,7 @@
 - name: "Start pm2 as service"
   become: true
   shell: |
-    env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
+    env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 
+    startup systemd -u ubuntu --hp /home/ubuntu
 
 
