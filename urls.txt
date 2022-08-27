@@ -1,3 +1,14 @@
 [URL01] public GitHub repository url : 
         https://github.com/hatemali510/p3-udaProduct-hatem
 
+[URL02] S3 Bucket url : 
+        http://udapeople-5fb1534.s3-website-us-east-1.amazonaws.com/#/employees
+
+[URL03] cloudfront url : 
+        d2avj641rcpzj3.cloudfront.net
+
+[URL04] status api url : 
+        http://54.167.210.36:3030/api/status
+
+[URL05]  Prometheus Server : 
+        http://54.166.143.167:9090/targets
