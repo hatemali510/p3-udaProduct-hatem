@@ -30,8 +30,9 @@ commands:
               SUCCESS=$(curl https://kvdb.io/S2wLLpoqSg7SZpN1V65i7Q/migration_<< parameters.workflow_id >>)
               if(( $SUCCESS==1 )); 
               then
-              cd backend
-              npm run migrations:revert
+                cd ~/project/backend
+                npm install
+                npm run migration:revert
               fi
 jobs:
   notify:
