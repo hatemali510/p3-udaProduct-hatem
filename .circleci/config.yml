@@ -248,7 +248,7 @@ jobs:
           command: |
             cd backend
             npm install
-            npm run migrations 
+            npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to kvdb
           command: |
@@ -256,9 +256,9 @@ jobs:
             pwd && ls -al
             if grep -q "has been executed successfully." ./migrations_dump.txt 
             then 
-              curl https://kvdb.io/S2wLLpoqSg7SZpN1V65i7Q/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              echo "has been executed successfully."
             else
-              curl https://kvdb.io/S2wLLpoqSg7SZpN1V65i7Q/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '0'
+              echo "has been not executed successfully."
             fi
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}     
@@ -433,39 +433,39 @@ jobs:
 workflows:
   default:
     jobs:
-      # - build-frontend
-      # - notify : 
-      #     requires: [build-frontend]
-      #     context: slack
-      # - build-backend
-      # - notify : 
-      #     requires: [build-backend]
-      #     context: slack
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [master]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      - run-migrations
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - build-frontend
+      - notify : 
+          requires: [build-frontend]
+          context: slack
+      - build-backend
+      - notify : 
+          requires: [build-backend]
+          context: slack
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]
   
